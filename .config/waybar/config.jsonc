@@ -1,31 +1,57 @@
 {
     "layer": "top",
     "modules-right": [
+        "cpu",
+        "memory",
         "pulseaudio",
+        "hyprland/language",
         "network",
-        "battery",
         "custom/notifications"
     ],
     "modules-center": [
         "clock",
-        "hyprland/workspaces"
+        "custom/weather"
     ],
     "modules-left": [
         "custom/icon",
-        "custom/weather"
+        "hyprland/workspaces",
+        "mpris"
     ],
     "spacing": 10,
-    "margin": 10,
     "icon-size": 40,
     "clock": {
         "interval": 60,
-        "format": "{:%H:%M}",
+        "format": "{:%a, %e %B, %H:%M %p}",
         "tooltip": false
+    },
+    "custom/weather": {
+        "exec": "${HOME}/.config/waybar/scripts/get_weather.sh TelAviv+Israel",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "interval": 3600
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "{}%  ",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": "{}%  ",
+        "max-length": 10
+    },
+    "custom/icon": {
+        "tooltip":true,
+        "exec":"${HOME}/.config/waybar/scripts/systeminfo.sh",
+        "return-type": "json",  
+        "format": "{}",
+        "interval": 60  
     },
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "1": " ",
+            "1": "1",
             "2": "2",
             "3": "3",
             "4": "4",
@@ -35,75 +61,71 @@
             "*": 5
         }
     },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "EN",
+        "format-he": "HE"
+    },
     "pulseaudio": {
         "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon}",
-        "format-muted": "",
+        "format-muted": " ",
         "format-icons": {
-            "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
-            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
-            "headphone": "",
-            "hands-free": "",
+            "alsa_output.pci-0000_00_1f.3.analog-stereo": " ",
+            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": " ",
+            "headphone": " ",
+            "hands-free": " ",
             "headset": "",
-            "phone": "",
-            "phone-muted": "",
-            "portable": "",
-            "car": "",
+            "phone": " ",
+            "phone-muted": " ",
+            "portable": " ",
+            "car": " ",
             "default": [
-                "",
-                "  "
+                " ",
+                " "
             ]
         },
         "scroll-step": 1,
-        "on-click": "pavucontrol",
+        "on-click": "wezterm start --class WiremixApp wiremix",
         "ignored-sinks": [
             "Easy Effects Sink"
         ]
     },
+    "mpris": {
+        "format": "{player_icon} {artist} • {title}",
+        "format-paused": "{status_icon} {artist} • {title}",
+        "format-stopped": "",
+        "max-length": 55,
+        "player-icons": {
+            "default": "▶"
+        },
+        "status-icons": {
+            "paused": "⏸"
+        }
+    },
     "network": {
         "interface": "wlp1s0f0",
         "format": "{ifname}",
-        "format-wifi": "{essid} {icon}",
-        "format-icons":[
-            "󰤯",
+        "format-wifi": "{icon}",
+        "format-icons": [
+            "󰤯 ",
             "󰤟 ",
             "󰤢 ",
             "󰤥 ",
             "󰤨 "
         ],
-        "format-ethernet": "{ipaddr}/{cidr} 󰊗",
-        "format-disconnected": "", //An empty format will hide the module.
-        "tooltip-format": "{ifname} via {gwaddr} 󰊗",   
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname} ",
+        "format-ethernet": "{ipaddr}/{cidr} 󰑩 ",
+        "format-disconnected": "󱖣 ",
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗 ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+        "tooltip-format-ethernet": "{ifname}  ",
         "tooltip-format-disconnected": "Disconnected",
         "on-click": "nm-connection-editor",
         "max-length": 50
     },
-  "custom/icon": {
-    "format":"  ",
-    "tooltip": false
-  },
-  "custom/weather": {
-    "format": "{}",
-        "tooltip": true,
-        "interval": 3600,
-        "exec": "curl -s 'wttr.in/Tel-Aviv?format=1' | sed 's/+//g'",
-        "return-type": "",
-        "on-click": "xdg-open https://wttr.in"
-   },
-   "custom/notifications": {
-    "format": "",
-    "on-click": "swaync-client -t" 
-   },
-    "battery": {
-        "format": "{capacity}% {icon}",
-        "format-icons": [
-            " ",
-            " ",
-            " ",
-            " ",
-            " "
-        ]
+    "custom/notifications": {
+        "format": " ",
+        "on-click": "swaync-client -t",
+        "tooltip": false
     }
 }
